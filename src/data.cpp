@@ -64,7 +64,7 @@ bool Data::isBigEndian(){
 }
 
 
-bool Data::loadFile(const char * filePath){
+long Data::loadFile(const char * filePath){
 	if(fileLoaded == false){
 		file = fopen(filePath, "rb");
 		fileLength = getFileLength();
@@ -74,10 +74,10 @@ bool Data::loadFile(const char * filePath){
 			fread(buffer, 1, fileLength, file);
 			fclose(file);
 			fileLoaded = true;
-			return true;
+			return fileLength;
 		}
 	}
-	return false;
+	return 0;
 	
 }
 
@@ -301,3 +301,47 @@ bool Data::writeDouble(double data, long offset){
 	}
 	return false;
 }
+
+void Data::readByteArray(unsigned char array[], long offset, long length)
+{
+	for(int i = 0; i<length; i++){
+		array[i] = buffer[offset+i];
+	}
+}
+
+void Data::readShortArray(unsigned short array[], long offset, long nShorts)
+{
+	for(int i = 0; i<nShorts; i++){
+		unsigned short x = 0;
+		readShort(&x,offset+i*sizeof(short));
+		array[i]=x;
+	}
+}
+
+void Data::readLongArray(unsigned long array[], long offset, long nLongs)
+{
+	for(int i = 0; i<nLongs; i++){
+		unsigned long x = 0;
+		readLong(&x,offset+i*sizeof(long));
+		array[i]=x;
+	}
+}
+
+void Data::readFloatArray(float array[], long offset, long nFloats)
+{
+	for(int i = 0; i<nFloats; i++){
+		float x = 0;
+		readFloat(&x,offset+i*sizeof(float));
+		array[i]=x;
+	}
+}
+
+void Data::readDoubleArray(double array[], long offset, long nDoubles)
+{
+	for(int i = 0; i<nDoubles; i++){
+		double x = 0;
+		readDouble(&x,offset+i*sizeof(double));
+		array[i]=x;
+	}
+}
+

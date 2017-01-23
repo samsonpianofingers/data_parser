@@ -29,21 +29,28 @@ class Data
 		bool isBigEndian();
 	
 		bool createNewFile(const char * filePath, long fileSize);
-		bool loadFile(const char * filePath);
+		long loadFile(const char * filePath);
 		bool saveFile(const char * filePath, long fileSize);
 		void clearLoadedFile();
 		
-		bool writeLong(long data, long offset);
-		bool writeShort(short data, long offset);
+		
 		bool writeByte(char data, long offset);
+		bool writeShort(short data, long offset);
+		bool writeLong(long data, long offset);
 		bool writeFloat(float data, long offset);
 		bool writeDouble(double data, long offset);
 	
-		void readLong(unsigned long * variable, long offset);
-		void readShort(unsigned short * variable, long offset);
 		void readByte(unsigned char * variable, long offset);
+		void readShort(unsigned short * variable, long offset);
+		void readLong(unsigned long * variable, long offset);
 		void readFloat(float * variable, long offset);
 		void readDouble(double * variable, long offset);
+		
+		void readByteArray(unsigned char array[], long offset, long length);
+		void readShortArray(unsigned short array[], long offset, long nShorts);
+		void readLongArray(unsigned long array[], long offset, long nLongs);
+		void readFloatArray(float array[], long offset, long nFloats);
+		void readDoubleArray(double array[], long offset, long nDoubles);
 };
 
 #endif
