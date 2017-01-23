@@ -5,3 +5,4 @@ Currently supports
 - read and write
 - data types -- byte, short, long, float, double
 currently working on array support and bitfield support.
+As well as support for opengl vectors and quaternions.
