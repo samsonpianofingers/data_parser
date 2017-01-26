@@ -33,7 +33,7 @@ long Data::getFileLength()
 	}
 	else
 	{
-		return ERR_NULLPTR;
+		return 0;
 	}
 }
 
@@ -115,6 +115,7 @@ bool Data::createNewFile(const char * filePath, long fileSize){
 
 
 bool Data::writeLong(long data, long offset){
+	if(offset+sizeof(long)>fileLength) return false;
 	if(endianMode == littleEndian && fileLoaded){
 		buffer[offset+3] = data & 0xff;
 		buffer[offset+2] = data >> 8;
@@ -135,6 +136,7 @@ bool Data::writeLong(long data, long offset){
 }
 
 bool Data::writeShort(short data, long offset){
+	if(offset+sizeof(short)>fileLength) return false;
 	if(endianMode == littleEndian){
 		buffer[offset+1] = data & 0xff;
 		buffer[offset] = data >> 8;
@@ -150,6 +152,7 @@ bool Data::writeShort(short data, long offset){
 }
 
 bool Data::writeByte(char data, long offset){
+	if(offset>fileLength) return false;
 	if(fileLoaded == true)
 	{
 		buffer[offset] = data;
@@ -159,7 +162,8 @@ bool Data::writeByte(char data, long offset){
 }
 
 
-void Data::readLong(unsigned long * variable, long offset){
+bool Data::readLong(unsigned long * variable, long offset){
+	if(offset+(sizeof(long))>fileLength) return false;
 	long result = 0;
 	if(endianMode == littleEndian && fileLoaded){
 		
@@ -180,7 +184,8 @@ void Data::readLong(unsigned long * variable, long offset){
 	
 }
 	
-void Data::readShort(unsigned short * variable, long offset){
+bool Data::readShort(unsigned short * variable, long offset){
+	if(offset+(sizeof(short))>fileLength) return false;
 	short result = 0;
 	if(endianMode == littleEndian && fileLoaded){
 		result += buffer[offset+1];
@@ -195,16 +200,19 @@ void Data::readShort(unsigned short * variable, long offset){
 	}
 }
 
-void Data::readByte(unsigned char * variable, long offset){
+bool Data::readByte(unsigned char * variable, long offset){
+	if(offset+sizeof(char)>fileLength) return false;
 	if(fileLoaded == true)
 	{
 		*variable = buffer[offset];
+		return true;
 	}
 }
 
 
 	
-void Data::readFloat(float * variable, long offset){
+bool Data::readFloat(float * variable, long offset){
+	if(offset+(sizeof(float))>fileLength) return false;
 	union{   float d; char bytes[sizeof(float)]; }convert;
 	if(endianMode == littleEndian && fileLoaded){
 		convert.bytes[0] = buffer[offset+3];
@@ -212,6 +220,7 @@ void Data::readFloat(float * variable, long offset){
 		convert.bytes[2] = buffer[offset+1];
 		convert.bytes[3] = buffer[offset];
 		*variable = convert.d;
+		return true;
 
 	}
 	else if (endianMode == bigEndian && fileLoaded)
@@ -221,10 +230,13 @@ void Data::readFloat(float * variable, long offset){
 		convert.bytes[1] = buffer[offset+1];
 		convert.bytes[0] = buffer[offset+0];
 		*variable = convert.d;
+		return true;
 	}
+	return false;
 }
 
 bool Data::writeFloat(float data, long offset){
+	if(offset+(sizeof(float))>fileLength) return false;
 	union{   float d; char bytes[sizeof(float)]; }convert;
 	convert.d = data;
 	if(endianMode == littleEndian && fileLoaded){
@@ -246,7 +258,8 @@ bool Data::writeFloat(float data, long offset){
 	
 }
 	
-void Data::readDouble(double * variable, long offset){
+bool Data::readDouble(double * variable, long offset){
+	if(offset+(sizeof(double))>fileLength) return false;
 	union{   double d; char bytes[sizeof(double)]; }convert;
 	if(endianMode == littleEndian && fileLoaded){
 		convert.bytes[0] = buffer[offset+7];
@@ -274,6 +287,7 @@ void Data::readDouble(double * variable, long offset){
 }
 
 bool Data::writeDouble(double data, long offset){
+	if(offset+(sizeof(double))>fileLength) return false;
 	union{   double d; char bytes[sizeof(double)]; }convert;
 	convert.d = data;
 	if(endianMode == littleEndian && fileLoaded){
@@ -302,46 +316,61 @@ bool Data::writeDouble(double data, long offset){
 	return false;
 }
 
-void Data::readByteArray(unsigned char array[], long offset, long length)
+bool Data::readByteArray(unsigned char array[], long offset, long length)
 {
-	for(int i = 0; i<length; i++){
+	if(offset+length>fileLength) return false;
+	for(int i = 0; i<length; i++)
+	{
 		array[i] = buffer[offset+i];
 	}
+	return true;
 }
 
-void Data::readShortArray(unsigned short array[], long offset, long nShorts)
+bool Data::readShortArray(unsigned short array[], long offset, long nShorts)
 {
+	int check = offset + (sizeof(short)*nShorts);
+	if(check>fileLength) return false;
 	for(int i = 0; i<nShorts; i++){
 		unsigned short x = 0;
 		readShort(&x,offset+i*sizeof(short));
 		array[i]=x;
 	}
+	return true;
 }
 
-void Data::readLongArray(unsigned long array[], long offset, long nLongs)
+bool Data::readLongArray(unsigned long array[], long offset, long nLongs)
 {
+	int check = offset + (sizeof(long)*nLongs);
+	if(check>fileLength) return false;
 	for(int i = 0; i<nLongs; i++){
 		unsigned long x = 0;
 		readLong(&x,offset+i*sizeof(long));
 		array[i]=x;
 	}
+	return true;
 }
 
-void Data::readFloatArray(float array[], long offset, long nFloats)
+bool Data::readFloatArray(float array[], long offset, long nFloats)
 {
+	int check = offset + (sizeof(float)*nFloats);
+	if(check>fileLength) return false;
 	for(int i = 0; i<nFloats; i++){
 		float x = 0;
 		readFloat(&x,offset+i*sizeof(float));
 		array[i]=x;
 	}
+	return true;
 }
 
-void Data::readDoubleArray(double array[], long offset, long nDoubles)
+bool Data::readDoubleArray(double array[], long offset, long nDoubles)
 {
+	int check = offset + (sizeof(double)*nDoubles);
+	if(check>fileLength) return false;
 	for(int i = 0; i<nDoubles; i++){
 		double x = 0;
 		readDouble(&x,offset+i*sizeof(double));
 		array[i]=x;
 	}
+	return true;
 }
 

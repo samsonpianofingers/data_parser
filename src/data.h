@@ -1,9 +1,6 @@
 #ifndef DATA_H
 #define DATA_H
 
-const int ERR_FILE_NOT_FOUND = -1;
-const int ERR_NULLPTR = -2;
-
 enum Endian
 {
 	littleEndian=0,
@@ -19,7 +16,6 @@ class Data
 		long fileLength;
 		long getFileLength();
 		bool fileLoaded;
-	
 	public:
 		
 		Data(Endian Endianness);
@@ -40,17 +36,21 @@ class Data
 		bool writeFloat(float data, long offset);
 		bool writeDouble(double data, long offset);
 	
-		void readByte(unsigned char * variable, long offset);
-		void readShort(unsigned short * variable, long offset);
-		void readLong(unsigned long * variable, long offset);
-		void readFloat(float * variable, long offset);
-		void readDouble(double * variable, long offset);
+		bool readByte(unsigned char * variable, long offset);
+		bool readShort(unsigned short * variable, long offset);
+		bool readLong(unsigned long * variable, long offset);
+		bool readFloat(float * variable, long offset);
+		bool readDouble(double * variable, long offset);
 		
-		void readByteArray(unsigned char array[], long offset, long length);
-		void readShortArray(unsigned short array[], long offset, long nShorts);
-		void readLongArray(unsigned long array[], long offset, long nLongs);
-		void readFloatArray(float array[], long offset, long nFloats);
-		void readDoubleArray(double array[], long offset, long nDoubles);
+		bool readByteArray(unsigned char array[], long offset, long length);
+		bool readShortArray(unsigned short array[], long offset, long nShorts);
+		bool readLongArray(unsigned long array[], long offset, long nLongs);
+		bool readFloatArray(float array[], long offset, long nFloats);
+		bool readDoubleArray(double array[], long offset, long nDoubles);
+		
+		#ifdef GLM_H
+		
+		#endif
 };
 
 #endif
