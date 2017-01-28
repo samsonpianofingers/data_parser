@@ -8,4 +8,9 @@ Looking to add support for bitfields, opengl quaternion and opengl vectors.
 I will accept any suggestions, questions or criticism 
 - either email, through issue submissions, or otherwise. 
 
+I suppose the other thing i must mention here is that I understand that
+its much more efficient to read a file and pass the data to structures, however
+There are some cases where it is useful to read data from files manually.
+such as when endianess matters.
+
 ~ Samson
