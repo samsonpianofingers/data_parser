@@ -2,9 +2,16 @@
 #include <cstdio>
 #include "data.h"
 
+Data::Data(){
+	int x = 1;
+	char *y = (char*)&x;
+	if(*y==1) endianMode = littleEndian;
+	else  endianMode = bigEndian;
+}
+
 Data::Data(Endian Endianness)
 {
-	setEndianness(Endianness);
+	endianMode = Endianness;
 	fileLoaded = false;
 }
 
@@ -29,15 +36,8 @@ long Data::getFileLength()
 	}
 }
 
-void Data::setEndianness(bool e){
-	if(e==true){
-		endianMode = littleEndian;
-	}
-	else
-	{
-		endianMode = bigEndian;
-	}
-	
+void Data::setEndianness(Endian e){
+	endianMode = e;
 }
 
 bool Data::isLittleEndian(){
@@ -128,11 +128,11 @@ bool Data::createNewFile(const char * filePath, long fileSize){
 		currentFile = std::fopen(filePath, "rb+");
 		if(currentFile == NULL) //if file does not already exist, create it
 		{
-			std::fclose(currentFile);
 			currentFile = std::fopen(filePath, "wb");
 			if(currentFile!=NULL){
 				buffer = new unsigned char[fileSize];
 				fileLoaded = true;
+				fileLength = fileSize;
 				return true;
 			}
 		}
@@ -143,19 +143,18 @@ bool Data::createNewFile(const char * filePath, long fileSize){
 bool Data::writeLong(long data, long offset){
 	if(offset+LONGsz>fileLength) return false;
 	if(endianMode == littleEndian && fileLoaded){
-		buffer[offset+3] = data & 0xff;
-		buffer[offset+2] = data >> 8;
-		buffer[offset+1] = data >> 16;
-		buffer[offset] = data >> 24;
-		return true;
-	}
-	else if (endianMode == bigEndian && fileLoaded)
-	{
-
 		buffer[offset] = data & 0xff;
 		buffer[offset+1] = data >> 8;
 		buffer[offset+2] = data >> 16;
 		buffer[offset+3] = data >> 24;
+		return true;
+	}
+	else if (endianMode == bigEndian && fileLoaded)
+	{
+		buffer[offset+3] = data & 0xff;
+		buffer[offset+2] = data >> 8;
+		buffer[offset+1] = data >> 16;
+		buffer[offset] = data >> 24;
 		return true;
 	}
 	return false;
@@ -164,14 +163,14 @@ bool Data::writeLong(long data, long offset){
 bool Data::writeShort(short data, long offset){
 	if(offset+SHORTsz>fileLength) return false;
 	if(endianMode == littleEndian){
-		buffer[offset+1] = data & 0xff;
-		buffer[offset] = data >> 8;
+		buffer[offset] = data & 0xff;
+		buffer[offset+1] = data >> 8;
 		return true;
 	}
 	else if (endianMode == bigEndian && fileLoaded)
 	{
-		buffer[offset] = data & 0xff;
-		buffer[offset+1] = data >> 8;
+		buffer[offset+1] = data & 0xff;
+		buffer[offset] = data >> 8;
 		return true;
 	}
 	return false;
@@ -190,19 +189,18 @@ bool Data::writeByte(char data, long offset){
 bool Data::writeLong(unsigned long data, long offset){
 	if(offset+LONGsz>fileLength) return false;
 	if(endianMode == littleEndian && fileLoaded){
-		buffer[offset+3] = data & 0xff;
-		buffer[offset+2] = data >> 8;
-		buffer[offset+1] = data >> 16;
-		buffer[offset] = data >> 24;
-		return true;
-	}
-	else if (endianMode == bigEndian && fileLoaded)
-	{
-
 		buffer[offset] = data & 0xff;
 		buffer[offset+1] = data >> 8;
 		buffer[offset+2] = data >> 16;
 		buffer[offset+3] = data >> 24;
+		return true;
+	}
+	else if (endianMode == bigEndian && fileLoaded)
+	{
+		buffer[offset+3] = data & 0xff;
+		buffer[offset+2] = data >> 8;
+		buffer[offset+1] = data >> 16;
+		buffer[offset] = data >> 24;
 		return true;
 	}
 	return false;
@@ -211,14 +209,15 @@ bool Data::writeLong(unsigned long data, long offset){
 bool Data::writeShort(unsigned short data, long offset){
 	if(offset+SHORTsz>fileLength) return false;
 	if(endianMode == littleEndian){
-		buffer[offset+1] = data & 0xff;
-		buffer[offset] = data >> 8;
+		buffer[offset] = data & 0xff;
+		buffer[offset+1] = data >> 8;
 		return true;
 	}
 	else if (endianMode == bigEndian && fileLoaded)
 	{
-		buffer[offset] = data & 0xff;
-		buffer[offset+1] = data >> 8;
+
+		buffer[offset+1] = data & 0xff;
+		buffer[offset] = data >> 8;
 		return true;
 	}
 	return false;
@@ -237,20 +236,20 @@ bool Data::writeByte(unsigned char data, long offset){
 bool Data::readLong(unsigned long * variable, long offset){
 	if(offset+(LONGsz)>fileLength) return false;
 	long result = 0;
-	if(endianMode == littleEndian && fileLoaded){
-		
-		result += buffer[offset+3];
-		result += (buffer[offset+2]) << 8;
-		result += (buffer[offset+1]) << 16;
-		result += (buffer[offset]) << 24;
-		*variable = result;
-	}
-	else if (endianMode == bigEndian && fileLoaded)
+	if(endianMode == littleEndian && fileLoaded)
 	{
 		result += buffer[offset];
 		result += buffer[offset+1]<< 8;
 		result += buffer[offset+2]<< 16;
 		result += buffer[offset+3]<< 24;
+		*variable = result;
+	}
+	else if (endianMode == bigEndian && fileLoaded)
+	{
+		result += buffer[offset+3];
+		result += (buffer[offset+2]) << 8;
+		result += (buffer[offset+1]) << 16;
+		result += (buffer[offset]) << 24;
 		*variable = result;
 	}
 	
@@ -260,14 +259,15 @@ bool Data::readShort(unsigned short * variable, long offset){
 	if(offset+(SHORTsz)>fileLength) return false;
 	short result = 0;
 	if(endianMode == littleEndian && fileLoaded){
-		result += buffer[offset+1];
-		result += buffer[offset] << 8;
+		result += buffer[offset];
+		result += (buffer[offset+1]) << 8;
 		*variable = result;
+
 	}
 	else if (endianMode == bigEndian && fileLoaded)
 	{
-		result += buffer[offset];
-		result += (buffer[offset+1]) << 8;
+		result += buffer[offset+1];
+		result += buffer[offset] << 8;
 		*variable = result;
 	}
 }
@@ -285,20 +285,21 @@ bool Data::readFloat(float * variable, long offset){
 	if(offset+(FLOATsz)>fileLength) return false;
 	union{   float d; char bytes[FLOATsz]; }convert;
 	if(endianMode == littleEndian && fileLoaded){
-		convert.bytes[0] = buffer[offset+3];
-		convert.bytes[1] = buffer[offset+2];
-		convert.bytes[2] = buffer[offset+1];
-		convert.bytes[3] = buffer[offset];
-		*variable = convert.d;
-		return true;
-
-	}
-	else if (endianMode == bigEndian && fileLoaded)
-	{
 		convert.bytes[3] = buffer[offset+3];
 		convert.bytes[2] = buffer[offset+2];
 		convert.bytes[1] = buffer[offset+1];
 		convert.bytes[0] = buffer[offset+0];
+		*variable = convert.d;
+		return true;
+
+
+	}
+	else if (endianMode == bigEndian && fileLoaded)
+	{
+		convert.bytes[0] = buffer[offset + 3];
+		convert.bytes[1] = buffer[offset + 2];
+		convert.bytes[2] = buffer[offset + 1];
+		convert.bytes[3] = buffer[offset];
 		*variable = convert.d;
 		return true;
 	}
@@ -310,18 +311,18 @@ bool Data::writeFloat(float data, long offset){
 	union{   float d; char bytes[FLOATsz]; }convert;
 	convert.d = data;
 	if(endianMode == littleEndian && fileLoaded){
-		buffer[offset] = convert.bytes[3];
-		buffer[offset+1] = convert.bytes[2];
-		buffer[offset+2] = convert.bytes[1];
-		buffer[offset+3] = convert.bytes[0];
-		return true;
-	}
-	else if (endianMode == bigEndian && fileLoaded)
-	{
 		buffer[offset+3] = convert.bytes[3];
 		buffer[offset+2] = convert.bytes[2];
 		buffer[offset+1] = convert.bytes[1];
 		buffer[offset] = convert.bytes[0];
+		return true;
+	}
+	else if (endianMode == bigEndian && fileLoaded)
+	{
+		buffer[offset] = convert.bytes[3];
+		buffer[offset+1] = convert.bytes[2];
+		buffer[offset+2] = convert.bytes[1];
+		buffer[offset+3] = convert.bytes[0];
 		return true;
 	}
 	return false;
@@ -332,18 +333,6 @@ bool Data::readDouble(double * variable, long offset){
 	if(offset+(DOUBLEsz)>fileLength) return false;
 	union{   double d; char bytes[DOUBLEsz]; }convert;
 	if(endianMode == littleEndian && fileLoaded){
-		convert.bytes[0] = buffer[offset+7];
-		convert.bytes[1] = buffer[offset+6];
-		convert.bytes[2] = buffer[offset+5];
-		convert.bytes[3] = buffer[offset+4];
-		convert.bytes[4] = buffer[offset+3];
-		convert.bytes[5] = buffer[offset+2];
-		convert.bytes[6] = buffer[offset+1];
-		convert.bytes[7] = buffer[offset];
-		*variable = convert.d;
-	}
-	else if (endianMode == bigEndian && fileLoaded)
-	{
 		convert.bytes[7] = buffer[offset+7];
 		convert.bytes[6] = buffer[offset+6];
 		convert.bytes[5] = buffer[offset+5];
@@ -354,6 +343,18 @@ bool Data::readDouble(double * variable, long offset){
 		convert.bytes[0] = buffer[offset];
 		*variable = convert.d;
 	}
+	else if (endianMode == bigEndian && fileLoaded)
+	{
+		convert.bytes[0] = buffer[offset+7];
+		convert.bytes[1] = buffer[offset+6];
+		convert.bytes[2] = buffer[offset+5];
+		convert.bytes[3] = buffer[offset+4];
+		convert.bytes[4] = buffer[offset+3];
+		convert.bytes[5] = buffer[offset+2];
+		convert.bytes[6] = buffer[offset+1];
+		convert.bytes[7] = buffer[offset];
+		*variable = convert.d;
+	}
 }
 
 bool Data::writeDouble(double data, long offset){
@@ -361,18 +362,6 @@ bool Data::writeDouble(double data, long offset){
 	union{   double d; char bytes[DOUBLEsz]; }convert;
 	convert.d = data;
 	if(endianMode == littleEndian && fileLoaded){
-		buffer[offset+7] = convert.bytes[0];
-		buffer[offset+6] = convert.bytes[1];
-		buffer[offset+5] = convert.bytes[2];
-		buffer[offset+4] = convert.bytes[3];
-		buffer[offset+3] = convert.bytes[4];
-		buffer[offset+2] = convert.bytes[5];
-		buffer[offset+1] = convert.bytes[6];
-		buffer[offset] = convert.bytes[7];
-		return true;
-	}
-	else if (endianMode == bigEndian && fileLoaded)
-	{
 		buffer[offset] = convert.bytes[0];
 		buffer[offset+1] = convert.bytes[1];
 		buffer[offset+2] = convert.bytes[2];
@@ -381,6 +370,19 @@ bool Data::writeDouble(double data, long offset){
 		buffer[offset+5] = convert.bytes[5];
 		buffer[offset+6] = convert.bytes[6];
 		buffer[offset+7] = convert.bytes[7];
+		return true;
+
+	}
+	else if (endianMode == bigEndian && fileLoaded)
+	{
+		buffer[offset+7] = convert.bytes[0];
+		buffer[offset+6] = convert.bytes[1];
+		buffer[offset+5] = convert.bytes[2];
+		buffer[offset+4] = convert.bytes[3];
+		buffer[offset+3] = convert.bytes[4];
+		buffer[offset+2] = convert.bytes[5];
+		buffer[offset+1] = convert.bytes[6];
+		buffer[offset] = convert.bytes[7];
 		return true;
 	}
 	return false;

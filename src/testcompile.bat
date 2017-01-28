@@ -1,3 +1,3 @@
 @echo off
-g++ testapp.cpp data.cpp -o .\bin\testapp.exe
+g++ testapp.cpp data.cpp -g -o .\bin\testapp.exe
 pause

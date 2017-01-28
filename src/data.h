@@ -22,15 +22,12 @@ class Data
 		long getFileLength();
 		bool fileLoaded;
 	public:	
-		
-		Data(Endian Endianness); //ctor
+		Data();
+		explicit Data(Endian Endianness); //ctor
 		Data(Endian Endianness, const char * filePath); //ctor overload
-		
-		
-		void setEndianness(bool e); // Change endianess on the fly
+		void setEndianness(Endian e); // Change endianess on the fly
 		bool isLittleEndian();
 		bool isBigEndian();
-		
 		//Checks if compiler/machine uses standard 32bit sizes for longs etc.
 		bool isCompatible();
 		
@@ -79,9 +76,9 @@ class Data
 		bool writeShortArray(unsigned short array[], long offset, long nShorts);
 		bool writeLongArray(unsigned long array[], long offset, long nLongs);
 		
-		#ifdef GLM_H
+//		#ifdef GLM_H
 		
-		#endif
+//		#endif
 };
 
 #endif
