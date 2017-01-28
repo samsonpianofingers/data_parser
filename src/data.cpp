@@ -1,6 +1,5 @@
 #include <cstdlib>
 #include <cstdio>
-#include <cstring>
 #include "data.h"
 
 Data::Data(Endian Endianness)
