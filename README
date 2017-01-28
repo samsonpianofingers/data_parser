@@ -1,8 +1,11 @@
-Data parser
-Personal project of mine, a class libary that parses data formats from files.
+Data parser - A Personal pet project of mine to help me learn c++,
+It is a class libary that parses data formats from files.
 Currently supports
 - Endianness
 - read and write
-- data types -- byte, short, long, float, double
-currently working on array support and bitfield support.
-As well as support for opengl vectors and quaternions.
+- data types -- byte, short, long, float, double and arrays
+Looking to add support for bitfields, opengl quaternion and opengl vectors.
+I will accept any suggestions, questions or criticism 
+- either email, through issue submissions, or otherwise. 
+
+~ Samson
