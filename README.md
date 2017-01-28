@@ -14,3 +14,7 @@ There are some cases where it is useful to read data from files manually.
 such as when endianess matters.
 
 ~ Samson
+
+References:
+http://stackoverflow.com/questions/12791864/c-program-to-check-little-vs-big-endian#12792301
+Marcus's Endianness Test Algorithm was used here.
