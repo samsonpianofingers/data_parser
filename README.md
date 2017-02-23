@@ -16,5 +16,5 @@ such as when endianess matters.
 ~ Samson
 
 References:
-http://stackoverflow.com/questions/12791864/c-program-to-check-little-vs-big-endian#12792301
-Marcus's Endianness Test Algorithm was used here.
+stackoverflow.com/questions/4181951/how-to-check-whether-a-system-is-big-endian-or-little-endian#4181991
+Belwoods's Endianness Test Algorithm was used in the argumentless constructor in the Data class.
