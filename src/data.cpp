@@ -3,11 +3,15 @@
 #include "data.h"
 
 Data::Data(){
-	// System Endianess test
+	// Auto Select system endianess during runtime (almost always little endian)
+	// Just means you dont have to pass any arguments
 	int x = 1;
-	char *y = (char*)&x;
-	if(*y==1) endianMode = littleEndian;
-	else  endianMode = bigEndian;
+	// little endian if true
+	if(*(char *)&x == 1)
+	{ endianMode = littleEndian;}
+	else
+	{endianMode = bigEndian;}
+	fileLoaded = false;
 }
 
 Data::Data(Endian Endianness)
@@ -56,6 +60,7 @@ bool Data::isBigEndian(){
 }
 
 bool Data::isCompatible(){
+	//NOTE: Compiler decides this on compile time, after that it is permanently false or true in the exe.
 	if(
 	SHORTsz == 2 &&
 	LONGsz == 4 &&

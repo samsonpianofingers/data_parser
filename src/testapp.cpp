@@ -4,9 +4,20 @@
 int main(int argc, char * argv[])
 {
 	// File to test features
-	Endian e = littleEndian;
-	puts("[*] Testing object constructor with arguments - Data(littleEndian)");
-	Data * data = new Data(e);
+//	Endian e = littleEndian;
+	puts("[*] Testing object constructor without arguments - Data()");
+	Data * data = new Data();
+	if(data->isCompatible())
+	{puts("[*] System that compiled this is compatible");}
+	else
+	{
+		puts("[*] System that compiled this is not combatible");
+		puts("[*] This means types are the wrong byte size for this software.");
+	}
+	
+	if(data->isLittleEndian()) puts("[*] Running in Little Endian Mode");
+	if(data->isBigEndian()) puts("[*] Running in Big Endian Mode");
+	
 	printf("[*] Data Object at -> %X\n", data);
 	puts("[*] Testing loadFile()");
 	if(data->loadFile("filetest"))
@@ -54,8 +65,6 @@ int main(int argc, char * argv[])
 	{printf("[*] Success! Returned correct value of %f\n",d);}
 	else
 	{printf("[*] Failure: Returned %f\n", d	);}
-
-
 
 	delete data;
 	return 0;
