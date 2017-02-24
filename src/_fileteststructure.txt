@@ -1,0 +1,28 @@
+DEFINES TEST FILE OFFSETS AND VALUES
+BE CAREFUL
+
+SINGLE VARIABLES
+unsigned long l = 1000;
+unsigned short s = 500;
+unsigned char c = 42;
+float f = 44.240002;
+double d = 3.141590;
+
+ARRAYS
+unsigned long l3[] = {100,200,300};
+unsigned short s3[] = {100,200,300};
+unsigned char c3[] = {1,2,3};
+unsigned float f3[] = {1.1,2.2,3.3};
+unsigned double d3[] = {1.123,.2.231,3.312};
+
+Offsets are:
+0-4
+4-6
+6-7
+7-11
+11-19
+19-31 [3]
+31-37 [3]
+37-40 [3]
+40-52 [3]
+52-76 [3]

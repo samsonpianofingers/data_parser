@@ -1,10 +1,9 @@
 #include <cstdlib>
 #include <cstdio>
 #include "data.h"
+// Program to test class functions
 int main(int argc, char * argv[])
 {
-	// File to test features
-//	Endian e = littleEndian;
 	puts("[*] Testing object constructor without arguments - Data()");
 	Data * data = new Data();
 	if(data->isCompatible())
@@ -65,6 +64,44 @@ int main(int argc, char * argv[])
 	{printf("[*] Success! Returned correct value of %f\n",d);}
 	else
 	{printf("[*] Failure: Returned %f\n", d	);}
+	
+	unsigned long l3 [3];
+	puts("[*] Testing readLongArray()");
+	data->readLongArray(l3,19,3);
+	if(l3[0] == 100 && l3[1] == 200 && l3[2] == 300)
+	{
+		printf("[*] Success! values are %d, %d, %d\n", l3[0], l3[1], l3[2]);
+	}
+	else
+	{
+		printf("[*] Failure! values are %d, %d, %d\n", l3[0], l3[1], l3[2]);
+	}
+	
+	unsigned short s3 [3];
+	puts("[*] Testing readShortArray()");
+	data->readShortArray(s3,31,3);
+	
+	if(s3[0] == 100 && s3[1] == 200 && s3[2] == 300)
+	{
+		printf("[*] Success! values are %d, %d, %d\n", s3[0], s3[1], s3[2]);
+	}
+	else
+	{
+		printf("[*] Failure! values are %d, %d, %d\n", s3[0], s3[1], s3[2]);
+	}
+	
+	unsigned char c3 [3];
+	puts("[*] Testing readByteArray()");
+	data->readByteArray(c3,37, 3);
+	
+	if(c3[0] == 1 && c3[1] == 2 && c3[2] == 3)
+	{
+		printf("[*] Success! values are %d, %d, %d\n", c3[0], c3[1], c3[2]);
+	}
+	else
+	{
+		printf("[*] Failure! values are %d, %d, %d\n", c3[0], c3[1], c3[2]);
+	}
 
 	delete data;
 	return 0;
