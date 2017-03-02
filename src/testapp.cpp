@@ -12,6 +12,7 @@ int main(int argc, char * argv[])
 	{
 		puts("[*] System that compiled this is not combatible");
 		puts("[*] This means types are the wrong byte size for this software.");
+		return 0;
 	}
 	
 	if(data->isLittleEndian()) puts("[*] Running in Little Endian Mode");
@@ -19,10 +20,12 @@ int main(int argc, char * argv[])
 	
 	printf("[*] Data Object at -> %X\n", data);
 	puts("[*] Testing loadFile()");
-	if(data->loadFile("filetest"))
-	{puts("[*] Success!");}
-	else
-	{puts("[*] Failed to open file");}
+	if(data->loadFile("filetest")) {
+		puts("[*] Success!");
+	}
+	else {
+		puts("[*] Failed to open file"); return 0;
+	}
 
 	// Testing reading unsigned longs, shorts, bytes and then floats and doubles
 	unsigned long l = 0;
@@ -30,16 +33,19 @@ int main(int argc, char * argv[])
 	data->readLong(&l, 0);
 	if(l == 1000)
 	{printf("[*] Success! Returned correct value of %d\n", l);}
-	else
-	{ printf("[*] Failed: Returned %d", l); }
+	else {
+		printf("[*] Failed: Returned %d", l);
+	}
 
 	unsigned short s = 0;
 	puts("[*] Testing readShort()");
 	data->readShort(&s, 4);
-	if(s == 500)
-	{printf("[*] Success! Returned correct value of %d\n",s);}
-	else
-	{printf("[*] Failure: Returned %d\n", s);}
+	if(s == 500) {
+		printf("[*] Success! Returned correct value of %d\n",s);
+	}
+	else {
+		printf("[*] Failure: Returned %d\n", s);
+	}
 
 	unsigned char c = 0;
 	puts("[*] Testing readByte()");
@@ -60,20 +66,22 @@ int main(int argc, char * argv[])
 	double d = 0;
 	puts("[*] Testing readDouble()");
 	data->readDouble(&d, 11);
-	if(d == 3.14159)
-	{printf("[*] Success! Returned correct value of %f\n",d);}
-	else
-	{printf("[*] Failure: Returned %f\n", d	);}
+	if(d == 3.14159){
+		printf("[*] Success! Returned correct value of %f\n",d);
+	}
+	else {
+		printf("[*] Failure: Returned %f\n", d	);
+	}
+	
+	// Testing reading arrays
 	
 	unsigned long l3 [3];
 	puts("[*] Testing readLongArray()");
 	data->readLongArray(l3,19,3);
-	if(l3[0] == 100 && l3[1] == 200 && l3[2] == 300)
-	{
+	if(l3[0] == 100 && l3[1] == 200 && l3[2] == 300) {
 		printf("[*] Success! values are %d, %d, %d\n", l3[0], l3[1], l3[2]);
 	}
-	else
-	{
+	else {
 		printf("[*] Failure! values are %d, %d, %d\n", l3[0], l3[1], l3[2]);
 	}
 	
@@ -81,12 +89,10 @@ int main(int argc, char * argv[])
 	puts("[*] Testing readShortArray()");
 	data->readShortArray(s3,31,3);
 	
-	if(s3[0] == 100 && s3[1] == 200 && s3[2] == 300)
-	{
+	if(s3[0] == 100 && s3[1] == 200 && s3[2] == 300) {
 		printf("[*] Success! values are %d, %d, %d\n", s3[0], s3[1], s3[2]);
 	}
-	else
-	{
+	else {
 		printf("[*] Failure! values are %d, %d, %d\n", s3[0], s3[1], s3[2]);
 	}
 	
@@ -94,15 +100,27 @@ int main(int argc, char * argv[])
 	puts("[*] Testing readByteArray()");
 	data->readByteArray(c3,37, 3);
 	
-	if(c3[0] == 1 && c3[1] == 2 && c3[2] == 3)
-	{
+	if(c3[0] == 1 && c3[1] == 2 && c3[2] == 3) {
 		printf("[*] Success! values are %d, %d, %d\n", c3[0], c3[1], c3[2]);
 	}
-	else
-	{
+	else {
 		printf("[*] Failure! values are %d, %d, %d\n", c3[0], c3[1], c3[2]);
 	}
-
-	delete data;
+	
+	// Testing writing data to new file
+	puts("[*] Testing createNewFile()");
+	if(data->createNewFile("newfile.bin", 57)) {
+		puts("[*] New file was created and loaded!")
+	}
+	else {
+		puts("[*] Failed to create/open new file");
+		return 0;
+	}
+	
+	puts("[*] Testing writeLong();");
+	unsigned long testlong = 12345678;
+	if(data->writeLong(testlong, 0)) {
+		
+	}
 	return 0;
 }
