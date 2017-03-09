@@ -19,10 +19,11 @@ class Data
 		FILE * currentFile;
 		unsigned char * buffer;
 		long fileLength;
-		long getFileLength();
 		bool fileLoaded;
+		long getFileLength();
 	public:	
 		Data();
+		~Data();
 		explicit Data(Endian Endianness); //ctor
 		Data(Endian Endianness, const char * filePath); //ctor overload
 		void setEndianness(Endian e); // Change endianess on the fly

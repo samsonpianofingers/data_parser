@@ -107,10 +107,12 @@ int main(int argc, char * argv[])
 		printf("[*] Failure! values are %d, %d, %d\n", c3[0], c3[1], c3[2]);
 	}
 	
+	puts("[*] Testing closeCurrentFile();");
+	data->closeCurrentFile();
 	// Testing writing data to new file
 	puts("[*] Testing createNewFile()");
 	if(data->createNewFile("newfile.bin", 57)) {
-		puts("[*] New file was created and loaded!")
+		puts("[*] New file was created and loaded!");
 	}
 	else {
 		puts("[*] Failed to create/open new file");
@@ -120,7 +122,20 @@ int main(int argc, char * argv[])
 	puts("[*] Testing writeLong();");
 	unsigned long testlong = 12345678;
 	if(data->writeLong(testlong, 0)) {
-		
+		puts("[*] Success!");
+	}
+	else
+	{
+		puts("[*] Failure!");
+	}
+
+	puts("[*] Testing saveCurrentFile();");
+	if(data->saveCurrentFile()){
+		puts("[*] Success!");
+	}
+	else
+	{
+		puts("[*] Failure!");
 	}
 	return 0;
 }
