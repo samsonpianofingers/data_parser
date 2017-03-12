@@ -128,6 +128,26 @@ int main(int argc, char * argv[])
 	{
 		puts("[*] Failure!");
 	}
+	
+	puts("[*] Testing writeShort();");
+	unsigned short testshort = 277;
+	if(data->writeShort(testshort, 4)) {
+		puts("[*] Success!");
+	}
+	else
+	{
+		puts("[*] Failure!");
+	}
+	
+	puts("[*] Testing writeByte();");
+	unsigned char testbyte = 128;
+	if(data->writeByte(testbyte, 6)) {
+		puts("[*] Success!");
+	}
+	else
+	{
+		puts("[*] Failure!");
+	}
 
 	puts("[*] Testing saveCurrentFile();");
 	if(data->saveCurrentFile()){

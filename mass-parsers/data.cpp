@@ -14,6 +14,11 @@ Data::Data(){
 	fileLoaded = false;
 }
 
+Data::~Data(){
+	delete [] buffer;
+	delete currentFile;
+}
+
 Data::Data(Endian Endianness)
 {
 	endianMode = Endianness;
@@ -129,18 +134,21 @@ void Data::closeCurrentFile(){
 }
 
 bool Data::createNewFile(const char * filePath, long fileSize){
-	if(!fileLoaded)
+	if(fileLoaded){
+		closeCurrentFile();
+	}
+	currentFile = std::fopen(filePath, "rb+");
+	if(currentFile == NULL) //if file does not already exist, create it
 	{
-		currentFile = std::fopen(filePath, "rb+");
-		if(currentFile == NULL) //if file does not already exist, create it
-		{
-			currentFile = std::fopen(filePath, "wb");
-			if(currentFile!=NULL){
-				buffer = new unsigned char[fileSize];
-				fileLoaded = true;
-				fileLength = fileSize;
-				return true;
+		currentFile = std::fopen(filePath, "wb");
+		if(currentFile!=NULL){
+			buffer = new unsigned char[fileSize];
+			for(long i = 0; i<fileSize; i++){
+				buffer[i] = 0;
 			}
+			fileLoaded = true;
+			fileLength = fileSize;
+			return true;
 		}
 	}
 	return false;
