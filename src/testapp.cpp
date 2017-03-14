@@ -148,6 +148,56 @@ int main(int argc, char * argv[])
 	{
 		puts("[*] Failure!");
 	}
+	
+	puts("[*] Testing writeLongArray();");
+	unsigned long[] larray = {10,20,30};
+	if(data->writeLongArray(larray, 7,3); {
+		puts("[*] Success");	   
+	}
+	
+	else {
+		 puts("[*] Failure!");
+	}
+	   
+	puts("[*] Testing writeShortArray();");
+	unsigned short sarray[] = {40,50,60};
+	if(data->writeShortArray(sarray, 19,3); {
+		puts("[*] Success");
+	}
+	
+	else {
+		 puts("[*] Failure!");
+	}
+	
+	puts("[*] Testing writeByteArray();");
+	unsigned char[] barray = {40,50,60};
+	if(data->writeByteArray(barray, 25,3);
+		puts("[*] Success");
+	}
+	
+	else {
+		 puts("[*] Failure!");
+	}
+	   
+	puts("[*] Testing writeFloat();");
+	float testfloat = 2.3;
+	if(data->writeFloat(testfloat,28)
+	{
+		puts("[*] Success");
+	}
+	else {
+		 puts("[*] Failure!");
+	}
+	   
+	puts("[*] Testing writeDouble();");
+	double testdouble = 2.3;
+	if(data->writeDouble(testdouble,32)
+	{
+		puts("[*] Success");
+	}
+	else {
+		 puts("[*] Failure!");
+	}
 
 	puts("[*] Testing saveCurrentFile();");
 	if(data->saveCurrentFile()){
@@ -158,4 +208,6 @@ int main(int argc, char * argv[])
 		puts("[*] Failure!");
 	}
 	return 0;
+	
+
 }
