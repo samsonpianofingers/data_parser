@@ -541,5 +541,8 @@ bool Data::writeLongArray(unsigned long array[], long offset, long nLongs){
 
 bool Data::readStruct(void * struct_ , StructInfo s, long offset){
 	
+	switch(s.structure)
+	{
+	}
 	return false;
 }
