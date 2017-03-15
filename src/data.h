@@ -13,10 +13,10 @@ enum Endian
 };
 
 enum Type {
-	ubyte, _byte,
-	ushort, _short,
-	ulong, _long,
-	_float, _double
+	uByte, Byte,
+	uShort, Short,
+	uLong, Long,
+	Float, Double
 };
 
 struct StructInfo {
