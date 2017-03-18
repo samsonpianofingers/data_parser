@@ -12,6 +12,18 @@ enum Endian
 	bigEndian=1
 };
 
+enum Type {
+	uByte, Byte,
+	uShort, Short,
+	uLong, Long,
+	Float, Double
+};
+
+struct StructInfo {
+	Type * structure;
+	unsigned long length;
+};
+
 class Data
 {
 	private:
@@ -77,6 +89,7 @@ class Data
 		bool writeShortArray(unsigned short array[], long offset, long nShorts);
 		bool writeLongArray(unsigned long array[], long offset, long nLongs);
 		
+		bool readStruct(void * struct_ , StructInfo s, long offset); 
 //		#ifdef GLM_H
 		
 //		#endif

@@ -537,5 +537,12 @@ bool Data::writeLongArray(unsigned long array[], long offset, long nLongs){
 		if(!writeLong(x,offset+i*LONGsz)) return false;
 	}
 	return true;
+}
 
+bool Data::readStruct(void * struct_ , StructInfo s, long offset){
+	
+	switch(s.structure)
+	{
+	}
+	return false;
 }
