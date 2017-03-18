@@ -1,43 +1,44 @@
 LIST OF TESTED FUNCTIONS IN TESTAPP.CPP
-KEY: # = Not Tested, X = Tested Fail, Y = TESTED SUCCESS
 
-Data()																Y
-Data(Endian Endianness)												Y
-isLittleEndian()													Y
-isBigEndian()														Y
-isCompatible()														Y
-createNewFile(const char * filePath, long fileSize) 				Y
-loadFile(const char * filePath)										Y
-saveCurrentFile()													Y
-writeFloat(float data, long offset)									Y
-writeDouble(double data, long offset)								Y
-writeByte(unsigned char data, long offset)							Y
-writeShort(unsigned short data, long offset)						Y
-writeLong(unsigned long data, long offset)							Y
-readByte(unsigned char * variable, long offset)						Y
-readShort(unsigned short * variable, long offset)					Y
-readLong(unsigned long * variable, long offset)						Y
-readFloat(float * variable, long offset)							Y
-readDouble(double * variable, long offset)							Y
-readByteArray(unsigned char array[], long offset, long length)		Y
-readShortArray(unsigned short array[], long offset, long nShorts)	Y
-readLongArray(unsigned long array[], long offset, long nLongs)		Y
-readFloatArray(float array[], long offset, long nFloats)			Y
-readDoubleArray(double array[], long offset, long nDoubles)			Y
-writeFloatArray(float array[], long offset, long nFloats)			Y
-writeDoubleArray(double array[], long offset, long nDoubles)		Y
-writeByteArray(unsigned char array[], long offset, long length)		Y
-writeShortArray(unsigned short array[], long offset, long nShorts)	Y
-writeLongArray(unsigned long array[], long offset, long nLongs)		Y
-~Data()																Y
+TESTED SUCCESS
+Data()
+Data(Endian Endianness)
+isLittleEndian()
+isBigEndian()
+isCompatible()
+createNewFile(const char * filePath, long fileSize) 
+loadFile(const char * filePath)
+saveCurrentFile()
+writeFloat(float data, long offset)
+writeDouble(double data, long offset)
+writeByte(unsigned char data, long offset)
+writeShort(unsigned short data, long offset)
+writeLong(unsigned long data, long offset)
+readByte(unsigned char * variable, long offset)
+readShort(unsigned short * variable, long offset)
+readLong(unsigned long * variable, long offset)
+readFloat(float * variable, long offset)
+readDouble(double * variable, long offset)
+readByteArray(unsigned char array[], long offset, long length)
+readShortArray(unsigned short array[], long offset, long nShorts)
+readLongArray(unsigned long array[], long offset, long nLongs)
+readFloatArray(float array[], long offset, long nFloats)
+readDoubleArray(double array[], long offset, long nDoubles)
+writeFloatArray(float array[], long offset, long nFloats)
+writeDoubleArray(double array[], long offset, long nDoubles)
+writeByteArray(unsigned char array[], long offset, long length)
+writeShortArray(unsigned short array[], long offset, long nShorts)
+writeLongArray(unsigned long array[], long offset, long nLongs)
+~Data()
 
-Data(Endian Endianness, const char * filePath)						#
-setEndianness(Endian e)												#
-saveFile(const char * filePath, long fileSize)						#
-void closeCurrentFile()												#
-writeByte(char data, long offset)									#
-writeShort(short data, long offset)									#
-writeLong(long data, long offset)									#
-writeByteArray(char array[], long offset, long length)				#
-writeShortArray(short array[], long offset, long nShorts)			#
-writeLongArray(long array[], long offset, long nLongs)				#
+UNTESTED
+Data(Endian Endianness, const char * filePath)
+setEndianness(Endian e)
+saveFile(const char * filePath, long fileSize)
+void closeCurrentFile()
+writeByte(char data, long offset)
+writeShort(short data, long offset)
+writeLong(long data, long offset)
+writeByteArray(char array[], long offset, long length)
+writeShortArray(short array[], long offset, long nShorts)
+writeLongArray(long array[], long offset, long nLongs)
