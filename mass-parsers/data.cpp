@@ -537,5 +537,4 @@ bool Data::writeLongArray(unsigned long array[], long offset, long nLongs){
 		if(!writeLong(x,offset+i*LONGsz)) return false;
 	}
 	return true;
-
 }

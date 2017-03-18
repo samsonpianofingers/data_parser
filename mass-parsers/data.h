@@ -76,7 +76,6 @@ class Data
 		bool writeByteArray(unsigned char array[], long offset, long length);
 		bool writeShortArray(unsigned short array[], long offset, long nShorts);
 		bool writeLongArray(unsigned long array[], long offset, long nLongs);
-		
 //		#ifdef GLM_H
 		
 //		#endif

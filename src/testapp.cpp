@@ -111,7 +111,7 @@ int main(int argc, char * argv[])
 	data->closeCurrentFile();
 	// Testing writing data to new file
 	puts("[*] Testing createNewFile()");
-	if(data->createNewFile("newfile.bin", 57)) {
+	if(data->createNewFile("newfile.bin", 256)) {
 		puts("[*] New file was created and loaded!");
 	}
 	else {
@@ -120,7 +120,7 @@ int main(int argc, char * argv[])
 	}
 	
 	puts("[*] Testing writeLong();");
-	unsigned long testlong = 12345678;
+	unsigned long testlong = 32;
 	if(data->writeLong(testlong, 0)) {
 		puts("[*] Success!");
 	}
@@ -130,7 +130,7 @@ int main(int argc, char * argv[])
 	}
 	
 	puts("[*] Testing writeShort();");
-	unsigned short testshort = 277;
+	unsigned short testshort = 32;
 	if(data->writeShort(testshort, 4)) {
 		puts("[*] Success!");
 	}
@@ -140,7 +140,7 @@ int main(int argc, char * argv[])
 	}
 	
 	puts("[*] Testing writeByte();");
-	unsigned char testbyte = 128;
+	unsigned char testbyte = 32;
 	if(data->writeByte(testbyte, 6)) {
 		puts("[*] Success!");
 	}
@@ -150,8 +150,8 @@ int main(int argc, char * argv[])
 	}
 	
 	puts("[*] Testing writeLongArray();");
-	unsigned long[] larray = {10,20,30};
-	if(data->writeLongArray(larray, 7,3); {
+	unsigned long larray[] = {32,64,128};
+	if(data->writeLongArray(larray, 7,3)){
 		puts("[*] Success");	   
 	}
 	
@@ -160,8 +160,8 @@ int main(int argc, char * argv[])
 	}
 	   
 	puts("[*] Testing writeShortArray();");
-	unsigned short sarray[] = {40,50,60};
-	if(data->writeShortArray(sarray, 19,3); {
+	unsigned short sarray[] = {32,64,128};
+	if(data->writeShortArray(sarray, 19,3)){
 		puts("[*] Success");
 	}
 	
@@ -170,8 +170,8 @@ int main(int argc, char * argv[])
 	}
 	
 	puts("[*] Testing writeByteArray();");
-	unsigned char[] barray = {40,50,60};
-	if(data->writeByteArray(barray, 25,3);
+	unsigned char barray[] = {32,64,128};
+	if(data->writeByteArray(barray, 25,3)){
 		puts("[*] Success");
 	}
 	
@@ -180,8 +180,8 @@ int main(int argc, char * argv[])
 	}
 	   
 	puts("[*] Testing writeFloat();");
-	float testfloat = 2.3;
-	if(data->writeFloat(testfloat,28)
+	float testfloat = 3.141;
+	if(data->writeFloat(testfloat,28))
 	{
 		puts("[*] Success");
 	}
@@ -190,11 +190,31 @@ int main(int argc, char * argv[])
 	}
 	   
 	puts("[*] Testing writeDouble();");
-	double testdouble = 2.3;
-	if(data->writeDouble(testdouble,32)
+	double testdouble = 3.141592;
+	if(data->writeDouble(testdouble,32))
 	{
 		puts("[*] Success");
 	}
+	else {
+		 puts("[*] Failure!");
+	}
+	
+	puts("[*] Testing writeFloatArray();");
+	float farray[] = {1,1.5,2.5};
+	if(data->writeFloatArray(farray, 40,3)){
+		puts("[*] Success");
+	}
+	
+	else {
+		 puts("[*] Failure!");
+	}
+	
+	puts("[*] Testing writeDoubleArray();");
+	double darray[] = {1,1.5,2.5};
+	if(data->writeDoubleArray(darray, 52,3)){
+		puts("[*] Success");
+	}
+	
 	else {
 		 puts("[*] Failure!");
 	}
@@ -209,5 +229,8 @@ int main(int argc, char * argv[])
 	}
 	return 0;
 	
+	data->~Data();
+	
+	//Tests up to here have succeded in producing correct values.
 
 }
