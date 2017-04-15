@@ -1,6 +1,6 @@
 LIST OF TESTED FUNCTIONS IN TESTAPP.CPP
 
-TESTED SUCCESS
+TESTED SUCCESS In both little and big endian modes.
 Data()
 Data(Endian Endianness)
 isLittleEndian()
@@ -29,6 +29,12 @@ writeDoubleArray(double array[], long offset, long nDoubles)
 writeByteArray(unsigned char array[], long offset, long length)
 writeShortArray(unsigned short array[], long offset, long nShorts)
 writeLongArray(unsigned long array[], long offset, long nLongs)
+writeByteArray(char array[], long offset, long length)
+writeShortArray(short array[], long offset, long nShorts)
+writeLongArray(long array[], long offset, long nLongs)
+writeByte(char data, long offset)
+writeShort(short data, long offset)
+writeLong(long data, long offset)
 ~Data()
 
 UNTESTED
@@ -36,9 +42,3 @@ Data(Endian Endianness, const char * filePath)
 setEndianness(Endian e)
 saveFile(const char * filePath, long fileSize)
 void closeCurrentFile()
-writeByte(char data, long offset)
-writeShort(short data, long offset)
-writeLong(long data, long offset)
-writeByteArray(char array[], long offset, long length)
-writeShortArray(short array[], long offset, long nShorts)
-writeLongArray(long array[], long offset, long nLongs)
