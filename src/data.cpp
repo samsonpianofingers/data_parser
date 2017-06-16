@@ -12,6 +12,9 @@ Data::Data(){
 	else
 	{endianMode = bigEndian;}
 	fileLoaded = false;
+    currentFile = NULL;
+    buffer = NULL;
+    fileLength = 0;
 }
 
 Data::~Data(){
@@ -23,6 +26,9 @@ Data::Data(Endian Endianness)
 {
 	endianMode = Endianness;
 	fileLoaded = false;
+    currentFile = NULL;
+    buffer = NULL;
+    fileLength = 0;
 }
 
 Data::Data(Endian Endianness, const char * filePath)

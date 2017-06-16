@@ -19,7 +19,7 @@ void testLittle(){
 	if(data->isLittleEndian()) puts("[*] Running in Little Endian Mode");
 	if(data->isBigEndian()) puts("[*] Running in Big Endian Mode");
 	
-	printf("[*] Data Object at -> %X\n", data);
+	printf("[*] Data Object at -> %p\n", &data);
 	puts("[*] Testing loadFile()");
 	if(data->loadFile("filetest1")) {
 		puts("[*] Success!");
@@ -33,9 +33,9 @@ void testLittle(){
 	puts("[*] Testing readLong()");
 	data->readLong(&l, 0);
 	if(l == 1000)
-	{printf("[*] Success! Returned correct value of %d\n", l);}
+	{printf("[*] Success! Returned correct value of %lu\n", l);}
 	else {
-		printf("[*] Failed: Returned %d", l);
+		printf("[*] Failed: Returned %lu", l);
 	}
 
 	unsigned short s = 0;
@@ -80,10 +80,10 @@ void testLittle(){
 	puts("[*] Testing readLongArray()");
 	data->readLongArray(l3,19,3);
 	if(l3[0] == 100 && l3[1] == 200 && l3[2] == 300) {
-		printf("[*] Success! values are %d, %d, %d\n", l3[0], l3[1], l3[2]);
+		printf("[*] Success! values are %lu, %lu, %lu\n", l3[0], l3[1], l3[2]);
 	}
 	else {
-		printf("[*] Failure! values are %d, %d, %d\n", l3[0], l3[1], l3[2]);
+		printf("[*] Failure! values are %lu, %lu, %lu\n", l3[0], l3[1], l3[2]);
 	}
 	
 	unsigned short s3 [3];
@@ -308,7 +308,7 @@ void testBig(){
 	if(data->isLittleEndian()) puts("[*] Running in Little Endian Mode");
 	if(data->isBigEndian()) puts("[*] Running in Big Endian Mode");
 	
-	printf("[*] Data Object at -> %X\n", data);
+	printf("[*] Data Object at -> %p\n", &data);
 	puts("[*] Testing loadFile()");
 	if(data->loadFile("filetest2")) {
 		puts("[*] Success!");
@@ -322,9 +322,9 @@ void testBig(){
 	puts("[*] Testing readLong()");
 	data->readLong(&l, 0);
 	if(l == 1000)
-	{printf("[*] Success! Returned correct value of %d\n", l);}
+	{printf("[*] Success! Returned correct value of %lu\n", l);}
 	else {
-		printf("[*] Failed: Returned %d", l);
+		printf("[*] Failed: Returned %lu", l);
 	}
 
 	unsigned short s = 0;
@@ -369,10 +369,10 @@ void testBig(){
 	puts("[*] Testing readLongArray()");
 	data->readLongArray(l3,19,3);
 	if(l3[0] == 100 && l3[1] == 200 && l3[2] == 300) {
-		printf("[*] Success! values are %d, %d, %d\n", l3[0], l3[1], l3[2]);
+		printf("[*] Success! values are %lu, %lu, %lu\n", l3[0], l3[1], l3[2]);
 	}
 	else {
-		printf("[*] Failure! values are %d, %d, %d\n", l3[0], l3[1], l3[2]);
+		printf("[*] Failure! values are %lu, %lu, %lu\n", l3[0], l3[1], l3[2]);
 	}
 	
 	unsigned short s3 [3];
